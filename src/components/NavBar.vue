@@ -5,7 +5,7 @@
         zilpay explorer
       </Title>
       <Button>
-        Connect ZilPay
+        Submit app
       </Button>
     </div>
   </nav>

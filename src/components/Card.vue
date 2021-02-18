@@ -21,7 +21,7 @@ export default {
 
 @media (min-width: 1012px) {
   .Card {
-    width: 25%;
+    width: 250px;
   }
 }
 </style>
