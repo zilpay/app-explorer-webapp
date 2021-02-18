@@ -1,12 +1,16 @@
 <template>
   <nav :class="b()">
     <div :class="b('wrapper')">
-      <Title>
-        zilpay explorer
-      </Title>
-      <Button>
-        Submit app
-      </Button>
+      <router-link :to="{ name: 'Home' }">
+        <Title>
+          ZIlPay Explorer
+        </Title>
+      </router-link>
+      <router-link :to="{ name: 'Submit' }">
+        <Button>
+          My Apps
+        </Button>
+      </router-link>
     </div>
   </nav>
 </template>
@@ -48,6 +52,9 @@ export default {
 
     max-width: 964px;
     width: 100%;
+
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 </style>

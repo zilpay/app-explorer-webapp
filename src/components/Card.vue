@@ -17,6 +17,11 @@ export default {
   width: 100%;
   margin: 10px;
   border-radius: 8px;
+
+  &:hover {
+    color: var(--link-color);
+    border-color: var(--link-color);
+  }
 }
 
 @media (min-width: 1012px) {

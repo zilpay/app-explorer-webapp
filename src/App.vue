@@ -94,4 +94,16 @@ h4 {
     background-color: var(--border-color);
   }
 }
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  10% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
 </style>

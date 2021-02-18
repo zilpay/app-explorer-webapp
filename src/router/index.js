@@ -13,6 +13,11 @@ const routes = [
     path: "/apps/:id",
     name: "Apps",
     component: () => import("@/views/Apps")
+  },
+  {
+    path: "/submit",
+    name: "Submit",
+    component: () => import("@/views/Submit")
   }
 ];
 
