@@ -45,6 +45,10 @@ body,
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 h1,
 h2,
 h3,
