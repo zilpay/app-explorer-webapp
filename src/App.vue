@@ -49,6 +49,11 @@ body,
   box-sizing: border-box;
 }
 
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
 h1,
 h2,
 h3,

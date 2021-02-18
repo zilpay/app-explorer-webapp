@@ -1,16 +1,22 @@
 <template>
-  <div :class="b()">
+  <main :class="b()">
     <div :class="b('wrapper')">
-      <Card v-for="(el, index) of categories" :key="index">
-        <div :class="b('img-wrapper')">
-          <img :src="el.img" height="150" width="150" />
-          <Title>
-            {{ el.title }}
-          </Title>
-        </div>
-      </Card>
+      <router-link
+        v-for="(el, index) of categories"
+        :key="index"
+        :to="{ name: 'Apps', params: { id: el.id } }"
+      >
+        <Card>
+          <div :class="b('img-wrapper')">
+            <img :src="el.img" height="150" width="150" />
+            <Title>
+              {{ el.title }}
+            </Title>
+          </div>
+        </Card>
+      </router-link>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -28,27 +34,33 @@ export default {
       categories: [
         {
           img: require("@/assets/imgs/exchange.svg"),
-          title: "Exchange"
+          title: "Exchange",
+          id: 0
         },
         {
           img: require("@/assets/imgs/finance.svg"),
-          title: "Finance"
+          title: "Finance",
+          id: 1
         },
         {
           img: require("@/assets/imgs/gambling.svg"),
-          title: "Gambling"
+          title: "Gambling",
+          id: 2
         },
         {
           img: require("@/assets/imgs/games.svg"),
-          title: "Games"
+          title: "Games",
+          id: 3
         },
         {
           img: require("@/assets/imgs/high-risk.svg"),
-          title: "Highrisk"
+          title: "Highrisk",
+          id: 4
         },
         {
           img: require("@/assets/imgs/social.svg"),
-          title: "Social"
+          title: "Social",
+          id: 5
         }
       ]
     };
