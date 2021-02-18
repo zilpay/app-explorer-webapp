@@ -18,10 +18,8 @@ export default {
 
   width: 100%;
 
-  border-color: var(--border-color);
   padding-top: 16px;
   padding-bottom: 16px;
-  border-top: 1px solid var(--border-color);
 
   &__row-0,
   &__row-1 {

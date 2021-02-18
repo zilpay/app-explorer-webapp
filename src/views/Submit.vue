@@ -9,5 +9,7 @@ export default {
 </script>
 
 <style lang="scss">
-.Submit {}
+.Submit {
+  margin: 0;
+}
 </style>

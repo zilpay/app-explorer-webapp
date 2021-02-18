@@ -36,10 +36,7 @@ export default {
 
   width: 100%;
 
-  border-bottom-width: 5px;
-  border-color: red;
-
-  border-color: var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-color);
 
   font-size: 18px;
