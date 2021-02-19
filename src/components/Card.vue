@@ -14,7 +14,7 @@ export default {
 .Card {
   border: 1px solid #e1e4e8;
   height: 250px;
-  width: 100%;
+  width: 90vw;
   margin: 10px;
   border-radius: 8px;
 

@@ -1,33 +1,27 @@
 <template>
   <main :class="b()">
-    <table :class="b('fold-table')">
-      <thead>
-        <tr>
-          <th>
-            #
-          </th>
-          <th />
-          <th
-            v-for="(el, index) of filterList"
-            :class="b('table-filter', { active: selected === index })"
-            :key="index"
-            @click="selected = index"
-          >
-            {{ el.name }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1232</td>
-          <td>dasdsa</td>
-          <td>dasdsa</td>
-          <td>dasdsa</td>
-          <td>dasdas</td>
-          <td>dasdas</td>
-        </tr>
-      </tbody>
-    </table>
+    <div :class="b('fold-table')">
+      <div :class="b('table-head')">
+        <div>
+          #
+        </div>
+        <div
+          v-for="(el, index) of filterList"
+          :class="b('table-filter', { active: selected === index })"
+          :key="index"
+          @click="selected = index"
+        >
+          {{ el.name }}
+        </div>
+      </div>
+      <div :class="b('table-body')">
+        <div>dsad</div>
+        <div>dasd</div>
+        <div>asdasd</div>
+        <div>dasdsa</div>
+        <div>dsa</div>
+      </div>
+    </div>
     <RowLoading v-show="false" />
   </main>
 </template>
@@ -71,14 +65,22 @@ export default {
   min-height: 50vh;
 
   &__fold-table {
-    padding: 16px;
     margin-top: 30px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+  }
 
-    & > thead {
-      border-bottom: 1px solid var(--border-color);;
-    }
+  &__table-head {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+
+    padding: 16px;
+  }
+
+  &__table-body {
+    display: flex;
+    align-items: center;
   }
 
   &__table-filter {

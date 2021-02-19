@@ -6,7 +6,7 @@
           ZIlPay Explorer
         </Title>
       </router-link>
-      <router-link :to="{ name: 'Submit' }">
+      <router-link :to="{ name: 'MyApps' }">
         <Button>
           My Apps
         </Button>

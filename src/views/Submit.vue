@@ -1,10 +1,17 @@
 <template>
-  <main :class="b()"></main>
+  <main :class="b()">
+    <DropAnImage />
+  </main>
 </template>
 
 <script>
+import DropAnImage from "@/components/DropAnImage";
+
 export default {
-  name: "Submit"
+  name: "Submit",
+  components: {
+    DropAnImage
+  }
 };
 </script>
 
