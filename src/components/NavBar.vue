@@ -1,11 +1,19 @@
 <template>
   <nav :class="b()">
     <div :class="b('wrapper')">
-      <router-link :to="{ name: 'Home' }">
-        <Title>
-          ZIlPay Explorer
-        </Title>
-      </router-link>
+      <div :class="b('nav')">
+        <router-link :to="{ name: 'Home' }">
+          <Title>
+            ZIlPay Explorer
+          </Title>
+        </router-link>
+        <span v-show="currentRoute" :class="b('seporate')">/</span>
+        <router-link :to="{ name: currentRoute }">
+          <Title>
+            {{ currentRoute }}
+          </Title>
+        </router-link>
+      </div>
       <router-link :to="{ name: 'MyApps' }">
         <Button>
           My Apps
@@ -24,6 +32,17 @@ export default {
   components: {
     Title,
     Button
+  },
+  computed: {
+    currentRoute() {
+      const { name } = this.$route;
+
+      if (name !== "Home") {
+        return name;
+      }
+
+      return null;
+    }
   }
 };
 </script>
@@ -41,6 +60,17 @@ export default {
 
   font-size: 18px;
   line-height: 1.4;
+
+  &__nav {
+    display: flex;
+    align-items: center;
+  }
+
+  &__seporate {
+    color: var(--text-color);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
   &__wrapper {
     display: flex;

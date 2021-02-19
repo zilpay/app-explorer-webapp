@@ -72,8 +72,8 @@ export default {
   width: 100%;
   height: 100%;
   min-height: 300px;
-  background-color: #eee;
-  border: 1px solid #eee;
+  background-color: var(--border-color);
+  border: 1px solid var(--border-color);
 
   display: flex;
   align-items: center;
