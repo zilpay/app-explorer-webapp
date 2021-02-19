@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="b({ isDragging })"
+    :class="b({ isDragging, loaded: !!imageSource })"
     @dragover.prevent="dragOver"
     @dragleave.prevent="dragLeave"
     @drop.prevent="drop($event)"
@@ -9,14 +9,14 @@
       v-if="imageSource"
       :src="imageSource"
       :class="b('img')"
-      height="300"
-      width="300"
+      :height="height"
+      :width="width"
     />
     <h1 v-if="wrongFile">
       Wrong file type
     </h1>
     <h1 v-if="!imageSource && !isDragging && !wrongFile">
-      Drop an image
+      <slot />
     </h1>
   </div>
 </template>
@@ -24,6 +24,14 @@
 <script>
 export default {
   name: "DropAnImage",
+  props: {
+    height: {
+      type: [String, Number]
+    },
+    width: {
+      type: [String, Number]
+    }
+  },
   data() {
     return {
       isDragging: false,
@@ -85,7 +93,13 @@ export default {
 
   &__img {
     width: 100%;
+    max-height: 300px;
     object-fit: contain;
+  }
+
+  &_loaded {
+    background-color: transparent;
+    border: none;
   }
 
   &_droped {

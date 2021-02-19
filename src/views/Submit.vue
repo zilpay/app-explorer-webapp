@@ -1,7 +1,12 @@
 <template>
   <main :class="b()">
-    <DropAnImage />
+    <DropAnImage>
+      Drop an poster
+    </DropAnImage>
     <div :class="b('wrapper')">
+      <DropAnImage :class="b('icon-uploader')" :height="300" :width="300">
+        Drop an icon
+      </DropAnImage>
       <TextareaAutosize
         v-model="description"
         :class="b('description-editor')"
@@ -36,6 +41,7 @@ export default {
     border: none;
 
     min-height: 20vh;
+    width: 100%;
 
     padding: 16px;
 
@@ -44,9 +50,17 @@ export default {
     outline: none;
   }
 
+  &__icon-uploader {
+    width: 300px;
+
+    margin: 16px;
+    border-radius: 100%;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
   }
 }
