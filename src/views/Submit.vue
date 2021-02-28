@@ -7,27 +7,40 @@
       <DropAnImage :class="b('icon-uploader')" :height="300" :width="300">
         Drop an icon
       </DropAnImage>
-      <TextareaAutosize
-        v-model="description"
-        :class="b('description-editor')"
-        maxlength="10240"
-        placeholder="What is your description?"
-      />
+      <form :class="b('submit-form')">
+        <TextInput v-model="domain" placeholder="App Domain like zilliqa.com" />
+        <TextInput v-model="name" placeholder="App name" />
+        <TextareaAutosize
+          v-model="description"
+          :class="b('description-editor')"
+          maxlength="10240"
+          placeholder="What is your description?"
+        />
+        <Button>
+          Submit
+        </Button>
+      </form>
     </div>
   </main>
 </template>
 
 <script>
 import DropAnImage from "@/components/DropAnImage";
+import TextInput from "@/components/TextInput";
+import Button from "@/components/Button";
 
 export default {
   name: "Submit",
   components: {
-    DropAnImage
+    DropAnImage,
+    TextInput,
+    Button
   },
   data() {
     return {
-      description: null
+      description: null,
+      domain: null,
+      name: null
     };
   }
 };
@@ -35,6 +48,22 @@ export default {
 
 <style lang="scss">
 .Submit {
+  &__submit-form {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 900px;
+    min-width: 300px;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    & > button {
+      width: 250px;
+      align-self: flex-end;
+    }
+  }
+
   &__description-editor {
     color: var(--link-color);
     background-color: transparent;
