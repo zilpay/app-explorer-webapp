@@ -1,10 +1,23 @@
 <template>
-  <input v-bind="$attrs" :class="b()" type="text" />
+  <input v-bind="$attrs" :class="b()" type="text" @input="onInput" />
 </template>
 
 <script>
 export default {
-  name: "TextInput"
+  name: "TextInput",
+  props: {
+    value: {
+      type: [String, Number],
+      required: false
+    }
+  },
+  methods: {
+    onInput(event) {
+      const { value } = event.target;
+
+      this.$emit("input", value);
+    }
+  }
 };
 </script>
 
