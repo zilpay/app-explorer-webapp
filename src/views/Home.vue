@@ -33,8 +33,8 @@ export default {
     return {
       categories: [
         {
-          img: require("@/assets/imgs/exchange.svg"),
-          title: "Exchange",
+          img: require("@/assets/imgs/games.svg"),
+          title: "Games",
           id: 0
         },
         {
@@ -43,23 +43,23 @@ export default {
           id: 1
         },
         {
-          img: require("@/assets/imgs/gambling.svg"),
-          title: "Gambling",
+          img: require("@/assets/imgs/social.svg"),
+          title: "Social",
           id: 2
-        },
-        {
-          img: require("@/assets/imgs/games.svg"),
-          title: "Games",
-          id: 3
         },
         {
           img: require("@/assets/imgs/high-risk.svg"),
           title: "Highrisk",
+          id: 3
+        },
+        {
+          img: require("@/assets/imgs/exchange.svg"),
+          title: "Exchange",
           id: 4
         },
         {
-          img: require("@/assets/imgs/social.svg"),
-          title: "Social",
+          img: require("@/assets/imgs/gambling.svg"),
+          title: "Gambling",
           id: 5
         }
       ]

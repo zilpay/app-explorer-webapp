@@ -70,7 +70,8 @@ export default {
       fileRecordsForUpload: [],
       description: null,
       domain: null,
-      name: null
+      name: null,
+      profilePic: null
     };
   },
   methods: {

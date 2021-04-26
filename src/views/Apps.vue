@@ -1,57 +1,36 @@
 <template>
   <main :class="b()">
-    <div :class="b('fold-table')">
-      <div :class="b('table-head')">
-        <div>
-          #
-        </div>
-        <div
-          v-for="(el, index) of filterList"
-          :class="b('table-filter', { active: selected === index })"
-          :key="index"
-          @click="selected = index"
-        >
-          {{ el.name }}
-        </div>
-      </div>
-      <div :class="b('table-body')">
-        <div>dsad</div>
-        <div>dasd</div>
-        <div>asdasd</div>
-        <div>dasdsa</div>
-        <div>dsa</div>
-      </div>
-    </div>
+    <AppItem
+      v-for="(el, index) of list"
+      :key="index"
+      :icon="el.icon"
+      :title="el.title"
+      :url="el.url"
+    />
     <RowLoading v-show="false" />
   </main>
 </template>
 
 <script>
 import RowLoading from "@/components/RowLoading";
+import AppItem from "@/components/AppItem";
+
+import ZilPayMixin from "@/mixins/zilpay";
 
 export default {
   name: "Apps",
+  mixins: [ZilPayMixin],
   components: {
-    RowLoading
+    RowLoading,
+    AppItem
   },
   data() {
     return {
-      filterList: [
-        {
-          name: "Users (24h)"
-        },
-        {
-          name: "Volume (7d)"
-        },
-        {
-          name: "Dev activity (30d)"
-        },
-        {
-          name: "User activity (30d)"
-        }
-      ],
-      selected: null
+      list: []
     };
+  },
+  async beforeMount() {
+    this.list = await this.__getAps(this.$route.params.id);
   }
 };
 </script>
@@ -63,6 +42,8 @@ export default {
   align-items: center;
 
   min-height: 50vh;
+
+  padding-top: 30px;
 
   &__fold-table {
     margin-top: 30px;
