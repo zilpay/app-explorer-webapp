@@ -7,7 +7,12 @@
       :title="el.title"
       :url="el.url"
     />
-    <RowLoading v-show="false" />
+    <div :class="b('load-wrapper')">
+      <RowLoading v-show="loading" />
+    </div>
+    <h3 v-show="list.length === 0 && !loading">
+      Have no Apps yet.
+    </h3>
   </main>
 </template>
 
@@ -26,11 +31,14 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      loading: true
     };
   },
   async beforeMount() {
+    this.loading = true;
     this.list = await this.__getAps(this.$route.params.id);
+    this.loading = false;
   }
 };
 </script>
@@ -44,6 +52,10 @@ export default {
   min-height: 50vh;
 
   padding-top: 30px;
+
+  &__load-wrapper {
+    width: 50%;
+  }
 
   &__fold-table {
     margin-top: 30px;
