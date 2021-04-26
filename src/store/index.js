@@ -4,8 +4,16 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    list: []
+  },
+  mutations: {
+    setAppList(state, list) {
+      if (Array.isArray(list)) {
+        state.list = list;
+      }
+    }
+  },
   actions: {},
   modules: {}
 });

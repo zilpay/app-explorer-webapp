@@ -1,6 +1,11 @@
+import { mapMutations } from 'vuex';
+
 export const EXPLORER = "0x0c20e40b3fe650c4c767db6bbb93db8295beac40";
 export default {
   methods: {
+    ...mapMutations([
+      'setAppList'
+    ]),
     async __connect() {
       const zilPay = await this.__zilpay();
 
@@ -31,7 +36,7 @@ export default {
           }
 
           k++;
-        }, 100);
+        }, 300);
       })
     },
     async __getSubState(address, field, value = []) {
@@ -45,22 +50,29 @@ export default {
 
       return result[field];
     },
-    async __getAps(category) {
+    async __getAps(category, owner) {
       const field = "app_list";
+      const params = [String(category)];
+
+      if (owner) {
+        params.push(owner);
+      }
 
       try {
-        let list = await this.__getSubState(EXPLORER, field, [String(category)]);
+        let list = await this.__getSubState(EXPLORER, field, params);
 
         list = list[category];
-        list = Object.values(list).map((el) => ({
-          title: el.arguments[0],
-          description: el.arguments[1],
-          url: el.arguments[2],
-          images: el.arguments[3],
-          icon: el.arguments[4],
-          category: el.arguments[5]
+        list = Object.keys(list).map((owner) => ({
+          owner,
+          title: list[owner].arguments[0],
+          description: list[owner].arguments[1],
+          url: list[owner].arguments[2],
+          images: list[owner].arguments[3],
+          icon: list[owner].arguments[4],
+          category: list[owner].arguments[5]
         }));
-        
+
+        this.setAppList(list);
 
         return list;
       } catch (err) {

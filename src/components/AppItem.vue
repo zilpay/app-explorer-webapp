@@ -9,10 +9,16 @@
       <div :class="b('title')">
         {{ title }}
       </div>
-      <span>
+      <div :class="b('domain')">
         {{ domain }}
-      </span>
+      </div>
     </div>
+    <a
+      :class="b('link')"
+      :href="url"
+      target="_blank">
+      Launch
+    </a>
   </div>
 </template>
 
@@ -59,6 +65,26 @@ export default {
   border-radius: 8px;
   width: 50%;
   margin: 5px;
+  padding-right: 16px;;
+
+  &__link {
+    z-index: 99;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--link-color);
+    border-radius: 23px;
+    padding: 0 24px;
+    outline: none;
+    line-height: 46px;
+    height: 46px;
+    font-size: 18px;
+    font-family: inherit;
+
+    &:hover {
+      border-color: var(--link-color);
+    }
+  }
 
   &__icon {
     border-radius: 100%;
@@ -75,6 +101,10 @@ export default {
     font-weight: bold;
     font-size: 21px;
     color: var(--link-color);
+  }
+
+  &__domain {
+    color: var(--border-color);
   }
 
   &:hover {
