@@ -1,6 +1,11 @@
 import { mapMutations } from 'vuex';
+import Big from 'big.js'
 
+Big.PE = 99
 export const EXPLORER = "0x0c20e40b3fe650c4c767db6bbb93db8295beac40";
+export const DISTRIBUTOR = "0x0c20e40b3fe650c4c767db6bbb93db8295beac40";
+
+const _decimal = Big('1000000000000000000'); // 10^18
 export default {
   methods: {
     ...mapMutations([
@@ -79,6 +84,43 @@ export default {
         console.log(err)
         return [];
       }
+    },
+    async __addAd(amountZLP, url, hash) {
+      const zilPay = await this.__zilpay();
+      const { contracts, utils } = zilPay;
+      const contract = contracts.at(DISTRIBUTOR);
+      const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
+      const gasLimit = 2000;
+      let _amountZLP = Big(String(amountZLP));
+
+      _amountZLP = _amountZLP.mul(_decimal);
+      _amountZLP = _amountZLP.round();
+
+      return await contract.call(
+        'AddAdvertising',
+        [
+          {
+            vname: 'amount',
+            type: 'Uint128',
+            value: String(_amountZLP)
+          },
+          {
+            vname: 'url',
+            type: 'String',
+            value: url
+          },
+          {
+            vname: 'banner_url',
+            type: 'String',
+            value: hash
+          }
+        ],
+        {
+          amount: '0',
+          gasPrice,
+          gasLimit: utils.Long.fromNumber(gasLimit)
+        }
+      )
     }
   }
 };

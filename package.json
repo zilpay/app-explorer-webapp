@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-number-input": "^1.2.1",
+    "big.js": "^6.1.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-bem-cn": "^1.1.1",
