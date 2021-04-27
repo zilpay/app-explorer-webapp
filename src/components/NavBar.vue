@@ -14,9 +14,9 @@
           </Title>
         </router-link>
       </div>
-      <router-link :to="{ name: 'MyApps' }">
+      <router-link :to="{ name: 'Submit' }">
         <Button>
-          My Apps
+          Submit
         </Button>
       </router-link>
     </div>
@@ -75,6 +75,7 @@ export default {
   &__wrapper {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     max-width: 964px;

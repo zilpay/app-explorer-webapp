@@ -15,19 +15,24 @@ const routes = [
     component: () => import("@/views/Apps")
   },
   {
-    path: "/my-apps",
-    name: "MyApps",
-    component: () => import("@/views/MyApps")
-  },
-  {
     path: "/submit",
     name: "Submit",
     component: () => import("@/views/Submit")
   },
   {
+    path: "/submit-app",
+    name: "SubmitApp",
+    component: () => import("@/views/SubmitApp")
+  },
+  {
     path: "/app/:id/:owner",
     name: "App",
     component: () => import("@/views/App")
+  },
+  {
+    path: "/add-ad",
+    name: "SubmitAd",
+    component: () => import("@/views/SubmitAd")
   }
 ];
 
