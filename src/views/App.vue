@@ -99,6 +99,7 @@ export default {
   &__description {
     text-align: center;
     font-size: 17px;
+    max-width: 900px;
   }
 
   &__preview {

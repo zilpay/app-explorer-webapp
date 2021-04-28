@@ -121,6 +121,54 @@ export default {
           gasLimit: utils.Long.fromNumber(gasLimit)
         }
       )
+    },
+    async __addApplication(title, desUrl, url, ipfsImages, ipfsIcon, category) {
+      const zilPay = await this.__zilpay();
+      const { contracts, utils } = zilPay;
+      const contract = contracts.at(DISTRIBUTOR);
+      const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
+      const gasLimit = 2000;
+
+      return await contract.call(
+        'AddApp',
+        [
+          {
+            vname: 'title',
+            type: 'String',
+            value: title
+          },
+          {
+            vname: 'des_url',
+            type: 'String',
+            value: desUrl
+          },
+          {
+            vname: 'url',
+            type: 'String',
+            value: url
+          },
+          {
+            vname: 'ipfs_image',
+            type: 'List String',
+            value: ipfsImages
+          },
+          {
+            vname: 'ipfs_icon',
+            type: 'String',
+            value: ipfsIcon
+          },
+          {
+            vname: 'category',
+            type: 'Uint32',
+            value: category
+          }
+        ],
+        {
+          amount: '0',
+          gasPrice,
+          gasLimit: utils.Long.fromNumber(gasLimit)
+        }
+      )
     }
   }
 };
