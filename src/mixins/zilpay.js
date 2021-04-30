@@ -162,7 +162,7 @@ export default {
           {
             vname: 'category',
             type: 'Uint32',
-            value: category
+            value: String(category)
           }
         ],
         {

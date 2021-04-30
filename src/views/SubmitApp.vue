@@ -26,11 +26,11 @@
         :multiple="false"
         :deletable="false"
         :meta="false"
-        :compact="true"
-        :accept="'.jpg,.png'"
+        :compact="false"
+        :accept="'.png,.jpg'"
         :helpText="'Drag an icon file here'"
         :errorText="{
-          type: 'Please select an image'
+          type: 'Please select an icon'
         }"
         @select="onSelectIcon($event)"
       />
@@ -84,6 +84,30 @@
         <Loader v-show="loading"/>
       </form>
     </div>
+    <modal
+      name="result-modal"
+      height="auto"
+    >
+      <div :class="b('modal-wrapper')">
+        <img
+          :src="require('@/assets/icons/ok.svg')"
+          height="100"
+          width="100"
+        >
+        <h2>
+          Transaction sent success
+        </h2>
+        <a
+          :href="`https://viewblock.io/zilliqa/tx/${hash}?network=${net}`"
+          target="_blank"
+        >
+          Check on Viewblock
+        </a>
+        <p>
+          Your Application sent to moderate and review.
+        </p>
+      </div>
+    </modal>
   </main>
 </template>
 
@@ -118,6 +142,7 @@ export default {
       imgsRecords: new FormData(),
       icon: new FormData(),
       error: null,
+      hash: '',
       categories: [
         {
           name: "Games",
@@ -145,6 +170,12 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    net() {
+      const zilpay = window["zilPay"];
+      return zilpay.wallet.net;
+    }
   },
   methods: {
     async uploadingPreview() {
@@ -195,7 +226,7 @@ export default {
         const hashSet = await this.uploadingPreview();
         const iconHash = await this.uploadingIcon();
 
-        await this.__addApplication(
+        const tx = await this.__addApplication(
           this.name,
           this.description,
           this.domain,
@@ -203,12 +234,14 @@ export default {
           iconHash,
           this.category.value
         );
+        this.hash = tx.ID;
+        this.$modal.show('result-modal');
       } catch (err) {
         this.error = err.message;
       }
       this.loading = false;
     },
-    onSelectIcon(event) {
+    onSelectIcon([event]) {
       this.error = null;
       this.icon.append('img', event.file);
     },
@@ -262,6 +295,16 @@ export default {
         color: var(--link-color);
       }
     }
+  }
+
+  &__modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 16px;
+    height: 30vh;
+    width: 100%;
   }
 
   &__error {
