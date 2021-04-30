@@ -2,8 +2,10 @@ import { mapMutations } from 'vuex';
 import Big from 'big.js'
 
 Big.PE = 99
-export const EXPLORER = "0x0c20e40b3fe650c4c767db6bbb93db8295beac40";
-export const DISTRIBUTOR = "0x0c20e40b3fe650c4c767db6bbb93db8295beac40";
+export const ZLP = "0x0d013a88d7d6eb569838316a74a14bfa544b9139";
+export const EXPLORER = "0x3c4b7337e78662928ce004adc200ce70c28b8810";
+export const MODERATOR = "0x28577bf16f1b3c84bf5a6589861e2ac8c7741e24";
+export const DISTRIBUTOR = "0x5560f72a661d58e4218be834bccf44529d6488a4";
 
 const _decimal = Big('1000000000000000000'); // 10^18
 export default {
@@ -90,7 +92,7 @@ export default {
       const { contracts, utils } = zilPay;
       const contract = contracts.at(DISTRIBUTOR);
       const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
-      const gasLimit = 2000;
+      const gasLimit = 10000;
       let _amountZLP = Big(String(amountZLP));
 
       _amountZLP = _amountZLP.mul(_decimal);
@@ -107,7 +109,7 @@ export default {
           {
             vname: 'url',
             type: 'String',
-            value: url
+            value: String(url)
           },
           {
             vname: 'banner_url',

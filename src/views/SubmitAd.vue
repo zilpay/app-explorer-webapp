@@ -38,6 +38,30 @@
         <Loader v-show="loading"/>
       </form>
     </div>
+    <modal
+      name="result-modal"
+      height="auto"
+    >
+      <div :class="b('modal-wrapper')">
+        <img
+          :src="require('@/assets/icons/ok.svg')"
+          height="100"
+          width="100"
+        >
+        <h2>
+          Transaction sent success
+        </h2>
+        <a
+          :href="`https://viewblock.io/zilliqa/tx/${hash}?network=${net}`"
+          target="_blank"
+        >
+          Check on Viewblock
+        </a>
+        <p>
+          Your banner sent to moderate and review.
+        </p>
+      </div>
+    </modal>
   </main>
 </template>
 
@@ -64,7 +88,14 @@ export default {
       ipfs: null,
       amount: 1,
       error: '',
-      loading: false
+      loading: false,
+      hash: ''
+    }
+  },
+  computed: {
+    net() {
+      const zilpay = window["zilPay"];
+      return zilpay.wallet.net;
     }
   },
   methods: {
@@ -94,7 +125,6 @@ export default {
     },
     async onSubmit() {
       this.error = null;
-
       if (this.amount <= 0) {
         this.error = "ZLP amount cannot be zero!";
 
@@ -115,11 +145,13 @@ export default {
 
       try {
         this.loading = true;
-        await this.__addAd(
+        const tx = await this.__addAd(
           this.amount,
           this.url,
           this.ipfs
         );
+        this.hash = tx.ID;
+        this.$modal.show('result-modal');
       } catch (err) {
         this.error = err.message;
       }
@@ -137,6 +169,16 @@ export default {
     align-items: center;
     justify-content: space-around;
     height: 300px;
+  }
+
+  &__modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 16px;
+    height: 30vh;
+    width: 100%;
   }
 
   &__warn {
