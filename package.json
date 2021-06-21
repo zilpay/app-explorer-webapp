@@ -15,6 +15,7 @@
     "vue": "^2.6.11",
     "vue-bem-cn": "^1.1.1",
     "vue-carousel": "^0.18.0",
+    "vue-carousel-card": "^1.0.7",
     "vue-file-agent": "^1.7.3",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-router": "^3.2.0",

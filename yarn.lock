@@ -7251,7 +7251,7 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
-resize-observer-polyfill@^1.5.1:
+resize-observer-polyfill@^1.5.0, resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
@@ -8167,6 +8167,11 @@ thread-loader@^2.1.3:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
+throttle-debounce@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
+  integrity sha512-XH8UiPCQcWNuk2LYePibW/4qL97+ZQ1AN3FNXwZRBNPPowo/NRU5fAlDCSNBJIYCKbioZfuYtMhG4quqoJhVzg==
+
 through2@^2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -8581,6 +8586,14 @@ vue-bem-cn@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vue-bem-cn/-/vue-bem-cn-1.1.1.tgz#1234e646c30dd0bac9a395e5395d36ba6fde3eb6"
   integrity sha512-Hfr3WaDxkjg93LX/RIpIJGxcIsRe+zqRnP2BMxgpWgTI93o3d5AGEp/pGrZHma+svnm8q5MJGKCL4GEhCMS7Xg==
+
+vue-carousel-card@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-carousel-card/-/vue-carousel-card-1.0.7.tgz#c104ded35291279ea3ca974a55b94f5de115aed7"
+  integrity sha512-wp6cEcwscP7wF+jUn2hpoes9Klx6a1AOUmnxP2hN7EmzvVhZeHL8IbHJv8E/Zd/NHHoMEQrImtdRALZVaPbgag==
+  dependencies:
+    resize-observer-polyfill "^1.5.0"
+    throttle-debounce "^1.0.1"
 
 vue-carousel@^0.18.0:
   version "0.18.0"

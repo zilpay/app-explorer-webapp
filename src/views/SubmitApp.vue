@@ -3,23 +3,30 @@
     <p :class="b('error')">
       {{ error }}
     </p>
-    <VueFileAgent
-      ref="posterRef"
-      :theme="'list'"
-      :multiple="true"
-      :deletable="true"
-      :meta="true"
-      :accept="'.png, .jpg'"
-      :maxSize="'2MB'"
-      :maxFiles="5"
-      helpText="Drop or select an poster images file (png, jpg)"
-      :errorText="{
-        type: 'Invalid file type. Only (png, jpg) Allowed',
-        size: 'Files should not exceed 1MB in size'
-      }"
-      @select="filesSelected($event)"
-    />
     <div :class="b('wrapper')">
+      <CarouselCard
+        v-show="hashpool.length > 0"
+        height="300px"
+        width="500px"
+        type="card"
+        arrow="always"
+      >
+        <CarouselCardItem
+          v-for="(hash, index) of hashpool"
+          :key="index"
+        >
+          <img
+            :src="`https://gateway.pinata.cloud/ipfs/${hash}`"
+            height="300"
+          />
+        </CarouselCardItem>
+      </CarouselCard>
+      <input
+        class="TextInput"
+        placeholder="add IPFS hash"
+        type="text"
+        @change="addPreview"
+      />
       <VueFileAgent
         :class="b('profile-pic-upload-block')"
         ref="iconPicRef"
@@ -112,13 +119,17 @@
 </template>
 
 <script>
+import "v-dropdown-menu/dist/v-dropdown-menu.css";
+
 import TextInput from "@/components/TextInput";
 import Loader from "@/components/Loader";
 import Button from "@/components/Button";
 import DropdownMenu from "v-dropdown-menu";
 
+import { CarouselCard, CarouselCardItem } from "vue-carousel-card";
+import "vue-carousel-card/styles/index.css";
+
 import ZilPayMixin from "@/mixins/zilpay";
-import "v-dropdown-menu/dist/v-dropdown-menu.css";
 
 export default {
   name: "SubmitApp",
@@ -127,7 +138,9 @@ export default {
     TextInput,
     Button,
     Loader,
-    DropdownMenu
+    DropdownMenu,
+    CarouselCard,
+    CarouselCardItem
   },
   data() {
     return {
@@ -135,6 +148,7 @@ export default {
       description: null,
       domain: null,
       name: null,
+      hashpool: [],
       category: {
         name: "Category",
         value: -1
@@ -178,16 +192,6 @@ export default {
     }
   },
   methods: {
-    async uploadingPreview() {
-      const options = {
-        method: 'POST',
-        body: this.imgsRecords
-      };
-
-      const res = await fetch('http://localhost:3000/api/v1/upload/imgs', options);
-
-      return res.json();
-    },
     async uploadingIcon() {
       const options = {
         method: 'POST',
@@ -198,6 +202,15 @@ export default {
       const { hash } = await res.json();
 
       return hash;
+    },
+    addPreview(event) {
+      const hash = event.target.value;
+
+      if (!this.hashpool.includes(hash) && hash && hash.length > 40) {
+        this.hashpool.push(hash);
+
+        event.target.value = '';
+      }
     },
     async submit() {
       if (!this.description) {
@@ -212,7 +225,7 @@ export default {
       if (!this.name) {
         this.error = "Name cannot empty.";
       }
-      if (this.imgsRecords.getAll('images').length < 2) {
+      if (this.hashpool.length < 2) {
         this.error = "Preview images should min 2x";
       }
       if (this.icon.getAll('img').length === 0) {
@@ -223,14 +236,13 @@ export default {
       }
       this.loading = true;
       try {
-        const hashSet = await this.uploadingPreview();
         const iconHash = await this.uploadingIcon();
 
         const tx = await this.__addApplication(
           this.name,
           this.description,
           this.domain,
-          hashSet,
+          this.hashpool,
           iconHash,
           this.category.value
         );
@@ -256,6 +268,9 @@ export default {
 </script>
 
 <style lang="scss">
+.carousel-card {
+  width: 100%;
+}
 .v-dropdown-menu__container {
   border-radius: 8px;
   min-width: 130px !important;
