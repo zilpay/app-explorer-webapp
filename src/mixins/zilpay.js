@@ -1,17 +1,25 @@
-import { mapMutations } from 'vuex';
-import Big from 'big.js'
+import { mapMutations } from "vuex";
+import Big from "big.js";
 
-Big.PE = 99
-export const ZLP = "0x0d013a88d7d6eb569838316a74a14bfa544b9139";
-export const EXPLORER = "0x3c4b7337e78662928ce004adc200ce70c28b8810";
-export const MODERATOR = "0x28577bf16f1b3c84bf5a6589861e2ac8c7741e24";
-export const DISTRIBUTOR = "0x5560f72a661d58e4218be834bccf44529d6488a4";
+Big.PE = 99;
+export const ZLP = "0x5a16db0e4954e3436137109548fa2c94aea1fd97";
+export const EXPLORER = "0x7475262a5c0baa2c7640461f7a0d1ca1cf213988";
+export const MODERATOR = "0x240431d296ff196c0587c6ee27be9a6ce2b9d7da";
+export const DISTRIBUTOR = "0x56aab7afa8560275dbdbd4bb7192eac0dcf5ecdf";
 
-const _decimal = Big('1000000000000000000'); // 10^18
+const _decimal = Big("1000000000000000000"); // 10^18
 export default {
+  data() {
+    return {
+      ZLP,
+      EXPLORER,
+      MODERATOR,
+      DISTRIBUTOR
+    };
+  },
   methods: {
     ...mapMutations([
-      'setAppList'
+      "setAppList"
     ]),
     async __connect() {
       const zilPay = await this.__zilpay();
@@ -44,18 +52,84 @@ export default {
 
           k++;
         }, 300);
-      })
+      });
+    },
+    async __getZLPBalance() {
+      const field = "balances";
+      const zilPay = await this.__zilpay();
+      const owner = String(zilPay.wallet.defaultAccount.base16).toLowerCase();
+      const value = await this.__getSubState(ZLP, field, [owner]);
+
+      if (!value || !value[owner]) {
+        return '0';
+      }
+
+      try {
+        return value[owner];
+      } catch (err) {
+        return '0'
+      }
+    },
+    async __increaseAllowance(address) {
+      const zilPay = await this.__zilpay();
+      const { contracts, utils } = zilPay;
+      const contract = contracts.at(ZLP);
+      const amount = utils.units.toQa('0', utils.units.Units.Zil);
+      const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
+      const balance = await this.__getZLPBalance();
+
+      return await contract.call(
+        'IncreaseAllowance',
+        [
+          {
+            vname: 'spender',
+            type: 'ByStr20',
+            value: address
+          },
+          {
+            vname: 'amount',
+            type: 'Uint128',
+            value: String(balance)
+          }
+        ],
+        {
+          amount,
+          gasPrice,
+          gasLimit: utils.Long.fromNumber(5000)
+        }
+      );
+    },
+    async __isUnlocked(amount) {
+      const field = "allowances";
+      const zilPay = await this.__zilpay();
+      const owner = String(zilPay.wallet.defaultAccount.base16).toLowerCase();
+      const value = await this.__getSubState(ZLP, field, [owner, DISTRIBUTOR]);
+
+      if (!value || !value || !value[owner] || !value[owner][DISTRIBUTOR]) {
+        return false;
+      }
+
+      const _decimal = Big('1000000000000000000');
+      const _value = Big(amount);
+      const _amount = _value.mul(_decimal);
+      const approved = Big(value[owner][DISTRIBUTOR]);
+
+      return approved.gte(_amount);
     },
     async __getSubState(address, field, value = []) {
       const zilPay = await this.__zilpay();
 
       await this.__connect();
 
-      const { result } = await zilPay
-        .blockchain
-        .getSmartContractSubState(address, field, value);
+      try {
+        const data = await zilPay
+          .blockchain
+          .getSmartContractSubState(address, field, value);
 
-      return result[field];
+        return data.result[field];
+      } catch {
+        return null;
+      }
     },
     async __getAps(category, owner) {
       const field = "app_list";
@@ -91,7 +165,7 @@ export default {
       const zilPay = await this.__zilpay();
       const { contracts, utils } = zilPay;
       const contract = contracts.at(DISTRIBUTOR);
-      const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
+      const gasPrice = utils.units.toQa("2000", utils.units.Units.Li);
       const gasLimit = 10000;
       let _amountZLP = Big(String(amountZLP));
 
@@ -99,26 +173,26 @@ export default {
       _amountZLP = _amountZLP.round();
 
       return await contract.call(
-        'AddAdvertising',
+        "AddAdvertising",
         [
           {
-            vname: 'amount',
-            type: 'Uint128',
+            vname: "amount",
+            type: "Uint128",
             value: String(_amountZLP)
           },
           {
-            vname: 'url',
-            type: 'String',
+            vname: "url",
+            type: "String",
             value: String(url)
           },
           {
-            vname: 'banner_url',
-            type: 'String',
+            vname: "banner_url",
+            type: "String",
             value: hash
           }
         ],
         {
-          amount: '0',
+          amount: "0",
           gasPrice,
           gasLimit: utils.Long.fromNumber(gasLimit)
         }
@@ -128,45 +202,45 @@ export default {
       const zilPay = await this.__zilpay();
       const { contracts, utils } = zilPay;
       const contract = contracts.at(DISTRIBUTOR);
-      const gasPrice = utils.units.toQa('2000', utils.units.Units.Li);
+      const gasPrice = utils.units.toQa("2000", utils.units.Units.Li);
       const gasLimit = 2000;
 
       return await contract.call(
-        'AddApp',
+        "AddApp",
         [
           {
-            vname: 'title',
-            type: 'String',
+            vname: "title",
+            type: "String",
             value: title
           },
           {
-            vname: 'des_url',
-            type: 'String',
+            vname: "des_url",
+            type: "String",
             value: desUrl
           },
           {
-            vname: 'url',
-            type: 'String',
+            vname: "url",
+            type: "String",
             value: url
           },
           {
-            vname: 'ipfs_image',
-            type: 'List String',
+            vname: "ipfs_image",
+            type: "List String",
             value: ipfsImages
           },
           {
-            vname: 'ipfs_icon',
-            type: 'String',
+            vname: "ipfs_icon",
+            type: "String",
             value: ipfsIcon
           },
           {
-            vname: 'category',
-            type: 'Uint32',
+            vname: "category",
+            type: "Uint32",
             value: String(category)
           }
         ],
         {
-          amount: '0',
+          amount: "0",
           gasPrice,
           gasLimit: utils.Long.fromNumber(gasLimit)
         }

@@ -89,6 +89,7 @@ export default {
       amount: 1,
       error: '',
       loading: false,
+      approved: false,
       hash: ''
     }
   },
@@ -125,6 +126,10 @@ export default {
     },
     async onSubmit() {
       this.error = null;
+      this.loading = true;
+
+      this.approved = await this.__isUnlocked(this.amount);
+
       if (this.amount <= 0) {
         this.error = "ZLP amount cannot be zero!";
 
@@ -141,6 +146,10 @@ export default {
         this.error = "URL cannot be empety.";
 
         return null;
+      }
+
+      if (!this.approved) {
+        await this.__increaseAllowance(this.DISTRIBUTOR);
       }
 
       try {
