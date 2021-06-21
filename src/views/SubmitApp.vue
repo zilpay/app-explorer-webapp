@@ -192,6 +192,23 @@ export default {
     }
   },
   methods: {
+    async uploadDescription() {
+      const options = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          description: this.description
+        })
+      };
+
+      const res = await fetch('http://localhost:3000/api/v1//upload/json', options);
+      const { hash } = await res.json();
+
+      return hash;
+    },
     async uploadingIcon() {
       const options = {
         method: 'POST',
@@ -237,10 +254,11 @@ export default {
       this.loading = true;
       try {
         const iconHash = await this.uploadingIcon();
+        const deshash = await this.uploadDescription();
 
         const tx = await this.__addApplication(
           this.name,
-          this.description,
+          deshash,
           this.domain,
           this.hashpool,
           iconHash,
