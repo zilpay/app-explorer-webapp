@@ -3,9 +3,9 @@ import Big from "big.js";
 
 Big.PE = 99;
 export const ZLP = "0x5a16db0e4954e3436137109548fa2c94aea1fd97";
-export const EXPLORER = "0x7475262a5c0baa2c7640461f7a0d1ca1cf213988";
-export const MODERATOR = "0x240431d296ff196c0587c6ee27be9a6ce2b9d7da";
-export const DISTRIBUTOR = "0x56aab7afa8560275dbdbd4bb7192eac0dcf5ecdf";
+export const EXPLORER = "0x64775441ce56bce245807389fccbae4e31b484b6";
+export const MODERATOR = "0x8a8ffe488e6ed9bf14d6b0f275232ac3da48802f";
+export const DISTRIBUTOR = "0x52777257408f4bca9d2fdceca4b3c3be4827f82c";
 
 const _decimal = Big("1000000000000000000"); // 10^18
 export default {
@@ -186,7 +186,7 @@ export default {
             value: String(url)
           },
           {
-            vname: "banner_url",
+            vname: "ipfs",
             type: "String",
             value: hash
           }
